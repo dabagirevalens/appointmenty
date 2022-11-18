@@ -4,12 +4,12 @@ import com.example.appointmenty.dtos.CreateUserDTO;
 import com.example.appointmenty.models.User;
 import com.example.appointmenty.services.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/api/v1/users")
+import java.util.List;
+
+@RestController
+@RequestMapping(path="/api/v1/users")
 public class UserController {
 
     private final IUserService userService;
@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping(path = "/register")
     public User registerUser(
             @RequestBody  CreateUserDTO createUserDTO
             ) {
@@ -29,8 +29,8 @@ public class UserController {
         return userService.create(user);
     }
 
-    @GetMapping("/")
-    public String test(){
-        return "Hello World";
+    @GetMapping("")
+    public List<User> getAllUsers() {
+        return userService.getAll();
     }
 }
